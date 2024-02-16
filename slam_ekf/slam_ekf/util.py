@@ -54,6 +54,27 @@ def get_cov_ellipse_pts(mu, cov):
     pts += np.array([[x,y]]).T
     return pts.T
 
+def plot_cov(plot_handle, ax, mu, cov):
+    """plot the gaussian as an ellipse
+
+    Args:
+        plot_handle (_type_): _description_
+        ax : 
+        mu (_type_): _description_
+        cov (_type_): _description_
+    """
+    xys = get_cov_ellipse_pts(mu=mu,cov=cov)
+    if plot_handle is None:
+        plot_handle = \
+            ax.plot(xys[:,0],xys[:,1],
+                    linestyle='-.',
+                    color=(0.2,0.2,0.2),
+                    linewidth=0.5)[0]
+    else:
+        plot_handle.set_data(xys[:,0],xys[:,1])
+    
+    return plot_handle
+
 def circle_loss(x, data):
     """calculate the loss for fitting the center
     and radius of the cylinder, based on lidar reflection
