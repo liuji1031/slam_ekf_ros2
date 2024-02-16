@@ -616,8 +616,8 @@ class SlamEkf(Node):
         s = np.sin(yaw)
         dx_r = c*dx+s*dy
         dy_r = -s*dx+c*dy
-        rho1 =  dx_r/(dx_r**2+dy_r**2)
-        rho2 = -dy_r/(dx_r**2+dy_r**2)
+        rho_x = -dy_r/(dx_r**2+dy_r**2)
+        rho_y =  dx_r/(dx_r**2+dy_r**2)
 
         # jacobian w.r.t robot state and jth landmark
         # row 1, range
@@ -625,9 +625,9 @@ class SlamEkf(Node):
         h01 = -rho_inv_sqrt*dy
        
         # row 2, bearing
-        h10 = rho1*s    + rho2*(-c)
-        h11 = rho1*(-c) + rho2*(-s)
-        h12 = rho1*(-dx_r) + rho2*(dy_r)
+        h10 = rho_x*(-c) + rho_y*s
+        h11 = rho_x*(-s) + rho_y*(-c)
+        h12 = rho_x*(dy_r) + rho_y*(-dx_r)
         H = np.array([[h00, h01, 0.0, -h00, -h01],
                       [h10, h11, h12, -h10, -h11]])
 

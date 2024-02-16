@@ -38,4 +38,4 @@ $$
 \end{align}
 $$
 
-where $\rho_x = -\delta_y^{(r)}/((\delta_x^{(r)})^2 + (\delta_y^{(r)})^2))$, and $\rho_y = \delta_x^{(r)}/((\delta_x^{(r)})^2 + (\delta_y^{(r)})^2))$. This formulation is used in the implementation of this project.
+where $\rho_x = -\delta_y^{(r)}/((\delta_x^{(r)})^2 + (\delta_y^{(r)})^2))$, and $\rho_y = \delta_x^{(r)}/((\delta_x^{(r)})^2 + (\delta_y^{(r)})^2))$. This formulation is used in the implementation of this project. A similar approach is used whenever the angle between two yaw angles need to be calculated.
