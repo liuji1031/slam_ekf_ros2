@@ -2,6 +2,7 @@
 
 import numpy as np
 from easydict import EasyDict as edict
+import rclpy
 from rclpy.node import Node
 from rclpy.callback_groups import MutuallyExclusiveCallbackGroup
 from rclpy.qos import qos_profile_sensor_data
@@ -10,9 +11,8 @@ from nav_msgs.msg import Odometry
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 from sklearn.cluster import DBSCAN
-from .util import quaternion_to_yaw,\
-    get_cov_ellipse_pts,get_center_radius,\
-    angle_between_yaw,plot_cov
+from .util import quaternion_to_yaw, get_center_radius,\
+                  angle_between_yaw, plot_cov
 
 class SlamEkf(Node):
     def __init__(self):
@@ -721,3 +721,13 @@ class SlamEkf(Node):
             # perform correction step
             self.mu = self.mu + K.dot(innovation)
             self.sigma = self.sigma - np.linalg.multi_dot((K,Z,K.T))
+
+def main(args=None):
+    rclpy.init(args=args)
+    ekf_slam = SlamEkf()
+    ekf_slam.get_logger().info("EKF SLAM started!")
+    rclpy.spin(ekf_slam)
+    rclpy.shutdown()
+
+if __name__ == "__main__":
+    main()
