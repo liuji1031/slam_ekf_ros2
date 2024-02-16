@@ -47,15 +47,15 @@ class SlamEkf(Node):
         self.sigma = np.zeros((3,3))
 
         # coefficient for motion noise covariance
-        self.alpha = [0.01,0.005,0.01,0.01] # rot/tr/rot/tr
+        self.alpha = [0.005,0.005,0.1,0.1] # rot/tr/rot/tr
         # coefficient for the sensor noise variance
-        self.beta = [0.01,0.005]
+        self.beta = [0.01,0.001]
 
         self.landmark_count = 0
 
         # create plot to show the slam process
         self.fig = plt.figure(figsize=(17,10),constrained_layout=True)
-        ncol = 6
+        ncol = 3
         gs = GridSpec(2, ncol, figure=self.fig)
         self.ax1 = self.fig.add_subplot(gs[:, :(ncol-1)],frameon=False)
         self.ax1.set_aspect('equal')
@@ -144,10 +144,9 @@ class SlamEkf(Node):
         """
         # extract pose info
         yaw = quaternion_to_yaw(msg)
-        pose = [msg.pose.pose.position.x,
-                msg.pose.pose.position.y,
-                yaw]
-        self.robot_pose_odom.append(pose)
+        x = msg.pose.pose.position.x
+        y = msg.pose.pose.position.y
+        self.robot_pose_odom.append([x,y,yaw])
 
     def scan_callback(self, msg : LaserScan):
         """callback for lidar scan topic; group lidar points using dbscan
@@ -266,8 +265,7 @@ class SlamEkf(Node):
         
         # plot odom coordinates
         if len(self.robot_pose_odom)>0:
-            odom_x = self.robot_pose_odom[-1].x
-            odom_y = self.robot_pose_odom[-1].y
+            odom_x, odom_y = self.robot_pose_odom[-1][:2]
         else:
             odom_x = 0.0
             odom_y = 0.0
@@ -281,11 +279,15 @@ class SlamEkf(Node):
         if self.cov_mat_plot is None:
             plt.sca(self.ax2)
             self.cov_mat_plot = plt.imshow(self.sigma, cmap='cool')
+            plt.colorbar(ax=self.ax2,aspect=20,shrink=0.3)
         else:
-            self.cov_mat_plot.set_data(self.sigma)
+            m = self.sigma.shape[0]
+            self.cov_mat_plot.set(data=self.sigma,extent=(0,m+1,0,m+1))
+            # plt.colorbar(ax=self.ax2)
 
-        self.ax1.set(xlim=(-1,21),ylim=(-8,8))
-        self.ax2.set(xlim=(0,self.mu.shape[0]),ylim=(0,self.mu.shape[0]))
+
+        self.ax1.set(xlim=(-3,15),ylim=(-15,3))
+        # self.ax2.set(xlim=(0,self.mu.shape[0]),ylim=(0,self.mu.shape[0]))
         self.fig.canvas.flush_events()
         self.fig.canvas.draw()
 
