@@ -1,6 +1,11 @@
 # SLAM Extended Kalman Filter
 
-This project aims to implement the vanila EKF SLAM algorithm in a simple simulated environment in Gazebo and ROS2 (Galactic).
+This project aims to implement from scratch the vanila EKF SLAM algorithm in a simple simulated environment in Gazebo and ROS2 (Galactic). The robot is the Turtlebot3 Burger and cylindrical landmarks are scattered around the environment. The center of the cylinders are inferred from the lidar scan and used as the landmark locations. In the demo below, the left panel plots the robot and landmark location while the right panels show the covariance matrix and the Gazebo environment. The loop closure is demonstrated in the demo below. 
+
+## Demo
+
+[![](demo.png)](https://www.youtube.com/watch?v=xXo5oBYnuxE)
+Click on the image for the video demo. The loop closure can be seen around 18 sec.
 
 ## Setup
 The Turtlebot3 Burger is used for simulation in a custom Gazebo world. The landmarks of the environment consist of cylinders whose centers serve as the landmark coordinates. 
