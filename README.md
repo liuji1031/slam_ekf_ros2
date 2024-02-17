@@ -13,7 +13,7 @@ $$
 \bar\theta_j = \text{arctan2}(\bar{y}_j-\bar{y}_r,\;\bar{x}_j-\bar{x}_r)-\bar\phi_r
 $$
 
-where $[\bar{x}_r,\;\bar{y}_r,\;\bar{\phi}_r]^T$ represents the predicted robot pose, $[\bar{x}_j,\;\bar{y}_j]$ is the landmark location. Let $\delta x = \bar{x}_j-\bar{x}_r$ and $ \delta y = \bar{y}_j-\bar{y}_r$. Instead of dealing with wrapping around $\pi$ and $-\pi$, it is easier and more consistent to express the bearing in the robot or sensor frame. Define the rotation matrix:
+where $[\bar{x}_r,\;\bar{y}_r,\;\bar{\phi}_r]^T$ represents the predicted robot pose, $[\bar{x}_j,\;\bar{y}_j]$ is the landmark location. Let $\delta x = \bar{x}_j-\bar{x}_r$ and $\delta y = \bar{y}_j-\bar{y}_r $. Instead of dealing with wrapping around $\pi$ and $-\pi$, it is easier and more consistent to express the bearing in the robot or sensor frame. Define the rotation matrix:
 
 $$
 R = \begin{bmatrix}
