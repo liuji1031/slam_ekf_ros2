@@ -4,6 +4,28 @@ This project aims to implement the vanila EKF SLAM algorithm in a simple simulat
 
 ## Setup
 The Turtlebot3 Burger is used for simulation in a custom Gazebo world. The landmarks of the environment consist of cylinders whose centers serve as the landmark coordinates. 
+1. Install Turtlebot3 pacakges
+```
+sudo apt install ros-<ros2 version>-turtlebot3*
+```
+2. Clone the current repo into a ros2 workspace
+```
+mkdir -p slam_ws/src && cd slam_ws/src
+git clone https://github.com/liuji1031/slam_ekf_ros2.git
+cd .. && colcon build
+```
+3. Run the launch file
+```
+ros2 launch slam_ekf turtlebot3_world.launch.py
+```
+4. Start SLAM node in a new terminal
+```
+ros2 run slam_ekf slam_ekf
+```
+5. Start keyboard teleop to control the robot
+```
+ros2 run teleop_twist_keyboard teleop_twist_keyboard 
+```
 
 ## Measurement model
 
